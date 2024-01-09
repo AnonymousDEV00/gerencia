@@ -1,0 +1,23 @@
+﻿@model GerenciaVendas.Models.Produto
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">@Model.Descricao</h3>
+        <div class="card-text">
+            <p><strong>Preço:</strong> @Model.Preco.ToString("C")</p>
+            <p><strong>Quantidade em Estoque:</strong> @Model.QuantidadeEstoque</p>
+            <!-- Inclua mais detalhes conforme necessário -->
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="@Url.Action("Edit", "Produto", new { id = Model.Id })" class="btn btn-success">Editar</a>
+    <a href="@Url.Action("Index", "Produto")" class="btn btn-primary">Voltar para a Lista</a>
+</div>

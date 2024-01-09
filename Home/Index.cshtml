@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Página Inicial - Sistema de Gerenciamento de Vendas";
+}
+
+<h2 class="text-center my-4">Bem-vindo ao Sistema de Gerenciamento de Vendas</h2>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Seção Vendas -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center bg-vendas">
+                    <h5 class="card-title text-white">Gerenciar Vendas</h5>
+                    <p class="card-text text-white-50">Visualize e gerencie todas as vendas.</p>
+                    <a href="@Url.Action("Index", "Venda")" class="btn btn-outline-light">Vendas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Produtos -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center bg-produtos">
+                    <h5 class="card-title text-white">Produtos</h5>
+                    <p class="card-text text-white-50">Administre os produtos do seu catálogo.</p>
+                    <a href="@Url.Action("Index", "Produto")" class="btn btn-outline-light">Produtos</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Relatórios -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center bg-relatorios">
+                    <h5 class="card-title text-white">Relatórios</h5>
+                    <p class="card-text text-white-50">Gere relatórios detalhados das vendas.</p>
+                    <a href="@Url.Action("Index", "Relatorio")" class="btn btn-outline-light">Relatórios</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Clientes -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center bg-clientes">
+                    <h5 class="card-title text-white">Clientes</h5>
+                    <p class="card-text text-white-50">Gerencie informações dos clientes.</p>
+                    <a href="@Url.Action("Index", "Cliente")" class="btn btn-outline-dark">Clientes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Usuários -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center bg-usuarios">
+                    <h5 class="card-title text-white">Usuários</h5>
+                    <p class="card-text text-white-50">Gerencie contas e acessos de usuários.</p>
+                    <a href="@Url.Action("Index", "Usuario")" class="btn btn-outline-dark">Usuários</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Itens de Venda -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center bg-itens">
+                    <h5 class="card-title text-white">Itens de Venda</h5>
+                    <p class="card-text text-white-50">Visualize e edite itens de vendas individuais.</p>
+                    <a href="@Url.Action("Index", "ItemVenda")" class="btn btn-outline-dark">Itens de Venda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .text-center {
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+
+        .card {
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .bg-vendas {
+            background-color: #8257e5;
+        }
+
+        .bg-produtos {
+            background-color: #04d361;
+        }
+
+        .bg-relatorios {
+            background-color: #e83f5b;
+        }
+
+        .bg-clientes {
+            background-color: #f7df1e;
+        }
+
+        .bg-usuarios {
+            background-color: #6a2ea8;
+        }
+
+        .bg-itens {
+            background-color: #fd951f;
+        }
+
+        .btn-outline-light, .btn-outline-dark {
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+            .btn-outline-light:hover, .btn-outline-dark:hover {
+                background-color: #fff;
+                color: #333;
+            }
+    </style>
+}

@@ -1,0 +1,63 @@
+﻿@model GerenciaVendas.ViewModels.NovaVendaViewModel
+
+@{
+    ViewData["Title"] = "Registrar Nova Venda";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post" id="vendaForm">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label asp-for="DataVenda" class="control-label">Data da Venda</label>
+        <input asp-for="DataVenda" type="date" class="form-control" />
+        <span asp-validation-for="DataVenda" class="text-danger"></span>
+    </div>
+
+    <div id="produtosVenda">
+        <!-- Campos de produtos serão adicionados aqui -->
+    </div>
+
+    <button type="button" id="adicionarProduto" class="btn btn-primary">Adicionar Produto</button>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Registrar Venda" class="btn btn-primary" />
+        <a href="@Url.Action("Index", "Venda")" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById('adicionarProduto').addEventListener('click', function () {
+            var container = document.getElementById('produtosVenda');
+            var produtoDiv = document.createElement('div');
+            produtoDiv.innerHTML = `
+                        <div class="form-group">
+                            <label>Produto</label>
+                            <select class="form-control">
+                                <!-- Opções de produtos vão aqui -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade</label>
+                            <input type="number" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger removerProduto">Remover</button>
+                        </div>
+                    `;
+            container.appendChild(produtoDiv);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('removerProduto')) {
+                e.target.closest('div.form-group').remove();
+            }
+        });
+    </script>
+}

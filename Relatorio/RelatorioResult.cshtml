@@ -1,0 +1,38 @@
+﻿@model GerenciaVendas.ViewModels.RelatorioResultViewModel
+
+@{
+    ViewData["Title"] = "Resultado do Relatório";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.DadosRelatorio != null && Model.DadosRelatorio.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Vendedor</th>
+                <th>Valor Total</th>
+                <!-- Outras colunas conforme necessário -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DadosRelatorio)
+            {
+                <tr>
+                    <td>@item.Data</td>
+                    <td>@item.NomeVendedor</td>
+                    <td>@item.ValorTotal.ToString("C")</td>
+                    <!-- Outras células conforme necessário -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum dado encontrado para os critérios selecionados.</p>
+}
+
+<a href="@Url.Action("Index", "Relatorio")" class="btn btn-primary">Voltar</a>

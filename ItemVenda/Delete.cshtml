@@ -1,0 +1,25 @@
+﻿@model GerenciaVendas.Models.ItemVenda
+
+@{
+    Layout = "_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>Excluir Item de Venda</h2>
+            <form id="deleteItemVendaForm" action="/ItemVenda/DeleteConfirmed/@Model.Id" method="post">
+                <p>Tem certeza de que deseja excluir este item de venda?</p>
+                <div class="alert alert-danger">
+                    <strong>ID do Item:</strong> @Model.Id <br>
+                    <strong>ID da Venda:</strong> @Model.IdVenda <br>
+                    <strong>ID do Produto:</strong> @Model.IdProduto <br>
+                    <strong>Quantidade:</strong> @Model.Quantidade <br>
+                    <strong>Preço de Venda:</strong> @Model.PrecoVenda
+                </div>
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <a href="/ItemVenda/Index" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿@model GerenciaVendas.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Gerencia X";
+}
+<h2>@ViewData["Title"]</h2>
+
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+}
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-6 login-info">
+            <h1>Bem-vindo ao Sistema de Gerenciamento de Vendas</h1>
+            <p>Facilitando a gestão de suas vendas, para que você possa focar no que realmente importa: o crescimento do seu negócio.</p>
+            <img src="~/images/management.svg" alt="Gerenciamento de Vendas" class="img-fluid">
+        </div>
+
+        <div class="col-md-6 login-form">
+            <form asp-action="Login" method="post" id="loginForm">
+                @Html.AntiForgeryToken()
+                <h2>Faça seu Login</h2>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn rocketseat-btn-blue">Entrar</button>
+                <a href="@Url.Action("Create", "Usuario")" class="btn rocketseat-btn-purple">Registrar</a>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            var email = document.getElementById('Email').value;
+            var senha = document.getElementById('Senha').value;
+            var errorMessage = '';
+
+            if (!email) {
+                errorMessage += 'O campo Email é obrigatório.\\n';
+            }
+
+            if (!senha) {
+                errorMessage += 'O campo Senha é obrigatório.';
+            }
+
+            if (errorMessage) {
+                event.preventDefault();
+                document.getElementById('error-message').innerText = errorMessage;
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+    </script>
+}

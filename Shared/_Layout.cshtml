@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gerencia X</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- FontAwesome atualizado -->
+    @RenderSection("Styles", required: false)
+</head>
+<body class="@ViewData["Page"]">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-rocketseat fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action()">GERENCIA X</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ml-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="nav-link" href="@Url.Action("Index", "Home")"><i class="fas fa-home"></i> Home</a>
+                            <span class="nav-link">Olá, <strong>@User.Identity.Name!</strong></span>
+                            <form asp-action="Logout" asp-controller="Usuario" method="post" class="form-inline">
+                                <button type="submit" class="nav-link btn-custom fake-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="nav-link btn-custom" href="@Url.Action("Login", "Usuario")"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a class="nav-link btn-custom" href="@Url.Action("Create", "Usuario")"><i class="fas fa-user-plus"></i> Cadastro</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container pb-3">
+        @RenderBody()
+    </main>
+
+    <footer class="footer-custom text-muted">
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year - Gerencia X - Sistema de Gerenciamento de Vendas. Todos os Direitos Reservados.
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

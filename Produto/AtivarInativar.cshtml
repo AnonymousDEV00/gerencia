@@ -1,0 +1,22 @@
+﻿@model GerenciaVendas.Models.Produto
+
+@{
+    ViewData["Title"] = Model.Estado ? "Inativar Produto" : "Ativar Produto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning">
+    <p>Tem certeza de que deseja @(Model.Estado ? "inativar" : "ativar") o produto <strong>@Model.Descricao</strong>?</p>
+</div>
+
+<form asp-action="@(Model.Estado ? "Inativar" : "Ativar")" method="post">
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        <input type="submit" value="@(Model.Estado ? "Inativar" : "Ativar") Produto" class="btn btn-warning" />
+        <a href="@Url.Action("Index", "Produto")" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

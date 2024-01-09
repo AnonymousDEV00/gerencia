@@ -1,0 +1,37 @@
+﻿@model IEnumerable<GerenciaVendas.Models.Venda>
+
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Venda")" class="btn btn-primary">Registrar Nova Venda</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Data da Venda</th>
+            <th>Usuário Vendedor</th>
+            <th>Total da Venda</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var venda in Model)
+        {
+            <tr>
+                <td>@venda.DataVenda.ToString("dd/MM/yyyy")</td>
+                <td>@venda.IdUsuario.</td>
+                <td>@venda.TotalVenda.ToString("C")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Venda", new { id = venda.Id })" class="btn btn-info">Detalhes</a>
+                    <a href="@Url.Action("Edit", "Venda", new { id = venda.Id })" class="btn btn-success">Editar</a>
+                    <!-- Aqui pode adicionar ação para inativar/ativar se aplicável -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

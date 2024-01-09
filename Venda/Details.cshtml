@@ -1,0 +1,41 @@
+﻿@model GerenciaVendas.ViewModels.DetalhesVendaViewModel
+
+@{
+    ViewData["Title"] = "Detalhes da Venda";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Venda realizada em @Model.DataVenda.ToString("dd/MM/yyyy")</h3>
+        <div class="card-text">
+            <p><strong>Vendedor:</strong> @Model.NomeVendedor</p>
+            <p><strong>Total da Venda:</strong> @Model.TotalVenda.ToString("C")</p>
+            <h4>Produtos Vendidos</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preço Unitário</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ItensVenda)
+                    {
+                        <tr>
+                            <td>@item.NomeProduto</td>
+                            <td>@item.Quantidade</td>
+                            <td>@item.PrecoUnitario.ToString("C")</td>
+                            <td>@(item.Quantidade * item.PrecoUnitario).ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Index", "Venda")" class="btn btn-primary">Voltar para a Lista</a>

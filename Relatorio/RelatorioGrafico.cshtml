@@ -1,0 +1,51 @@
+﻿@model GerenciaVendas.ViewModels.RelatorioResultViewModel
+
+@{
+    ViewData["Title"] = "Gráfico do Relatório";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.DadosRelatorio.Any())
+{
+    <canvas id="graficoRelatorio"></canvas>
+}
+else
+{
+    <p>Nenhum dado encontrado para os critérios selecionados.</p>
+}
+
+<a href="@Url.Action("Index", "Relatorio")" class="btn btn-primary">Voltar para Seleção de Relatório</a>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('graficoRelatorio').getContext('2d');
+        var data = {
+            labels: @Html.Raw(Json.Serialize(Model.DadosRelatorio.Select(d => d.Data.ToString("dd/MM/yyyy")))),
+            datasets: [{
+                label: 'Vendas',
+                data: @Html.Raw(Json.Serialize(Model.DadosRelatorio.Select(d => d.ValorTotal))),
+                backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+    </script>
+}

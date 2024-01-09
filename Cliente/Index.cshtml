@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GerenciaVendas.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Cliente")" class="btn btn-primary">Adicionar Novo Cliente</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>CPF/CNPJ</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model)
+        {
+            <tr>
+                <td>@cliente.Nome</td>
+                <td>@cliente.DataNascimento.ToString("dd/MM/yyyy")</td>
+                <td>@cliente.CPF_CNPJ</td>
+                <td>@cliente.Endereco</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Cliente", new { id = cliente.Id })" class="btn btn-success">Editar</a>
+                    <a href="@Url.Action("Details", "Cliente", new { id = cliente.Id })" class="btn btn-info">Detalhes</a>
+                    <a href="@Url.Action(cliente.Estado ? "Inativar" : "Ativar", "Cliente", new { id = cliente.Id })" class="btn btn-warning">
+                        @(cliente.Estado ? "Inativar" : "Ativar")
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

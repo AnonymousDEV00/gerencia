@@ -1,0 +1,42 @@
+﻿@model GerenciaVendas.ViewModels.RelatorioResultViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Relatório";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.DadosRelatorio.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Vendedor</th>
+                <th>Valor Total</th>
+                <!-- Adicione outras colunas conforme necessário -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DadosRelatorio)
+            {
+                <tr>
+                    <td>@item.Data.ToString("dd/MM/yyyy")</td>
+                    <td>@item.NomeVendedor</td>
+                    <td>@item.ValorTotal.ToString("C")</td>
+                    <!-- Adicione outras células de dados conforme necessário -->
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <h3>Total de Vendas: @Model.CalcularTotalVendas().ToString("C")</h3>
+    </div>
+}
+else
+{
+    <p>Nenhum dado encontrado para os critérios selecionados.</p>
+}
+
+<a href="@Url.Action("Index", "Relatorio")" class="btn btn-primary">Voltar para Seleção de Relatório</a>

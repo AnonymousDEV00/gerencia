@@ -1,0 +1,144 @@
+﻿@using GerenciaVendas.ViewModels
+
+@model GerenciaVendas.Models.Usuario
+
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<style>
+    /* Estilos existentes para .edit-user-container, .edit-user-title, etc. */
+
+    .form-group label {
+        color: #322660;
+    }
+
+    .form-control {
+        border: 1px solid #322660;
+        border-radius: 4px;
+    }
+
+    .text-danger {
+        color: #ff6e6e;
+    }
+
+    .form-action-buttons {
+        text-align: center;
+    }
+
+    .btn-success {
+        background-color: #5e4a8a; /* Cor secundária */
+    }
+
+    .toggle-password {
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 20px;
+    }
+</style>
+
+<div class="edit-user-container">
+    <h2 class="edit-user-title">@ViewData["Title"]</h2>
+
+    @if (ViewBag.EditUserError != null)
+    {
+        <div class="alert alert-danger">@ViewBag.EditUserError</div>
+    }
+
+    <form asp-action="Edit" method="post" class="edit-user-form" id="editUserForm">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="Nome" class="control-label">Nome</label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SenhaHash" class="control-label">Senha Atual</label>
+            <input asp-for="SenhaHash" type="password" class="form-control" />
+            <span asp-validation-for="SenhaHash" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Senha" class="control-label">Nova Senha</label>
+            <input asp-for="Senha" type="password" class="form-control" />
+            <span onclick="togglePasswordVisibility('NovaSenha', 'toggleNovaSenha')" class="toggle-password" id="toggleNovaSenha">
+                <i class="fas fa-eye"></i> <!-- FontAwesome ícone -->
+            </span>
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-action-buttons">
+            <input type="submit" value="Salvar Alterações" class="btn btn-success" />
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById('changePasswordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var senhaAtual = document.getElementById('senhaAtual').value;
+            var novaSenha = document.getElementById('novaSenha').value;
+
+            // Verificação básica: Verifica se os campos não estão vazios
+            if (!senhaAtual || !novaSenha) {
+                alert('Por favor, preencha todos os campos de senha.');
+                return;
+            }
+
+            // Adicione aqui outras validações, como comprimento da senha, caracteres especiais, etc.
+
+            // Envia a solicitação para o servidor se passar nas validações
+            fetch('/caminho/para/endpoint/de/alteracao/de/senha', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Inclua aqui outros cabeçalhos necessários, como tokens de autenticação
+                },
+                body: JSON.stringify({ senhaAtual: senhaAtual, novaSenha: novaSenha })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Problema na alteração da senha.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.sucesso) {
+                        alert('Senha alterada com sucesso.');
+                        // Redirecionar ou atualizar a página conforme necessário
+                    } else {
+                        alert('Falha ao alterar senha. ' + data.mensagem);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao alterar a senha:', error);
+                    alert('Ocorreu um erro ao alterar a senha.');
+                });
+        });
+    </script>
+
+
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- FontAwesome CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script> <!-- FontAwesome JS -->

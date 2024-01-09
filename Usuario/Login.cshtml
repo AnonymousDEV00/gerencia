@@ -1,0 +1,83 @@
+﻿@model GerenciaVendas.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login - Gerencia X";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 text-center my-4">
+            <h1 class="text-rocketseat-primary">Bem-vindo ao Sistema de Gerenciamento de Vendas</h1>
+            <p class="font-weight-light">Otimize seus processos e impulsione seu crescimento com análises detalhadas e gerenciamento eficaz.</p>
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-6">
+            <img src="~/image/loginimg.png" alt="Gerenciamento de Vendas" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white p-5 rounded shadow">
+                <h2 class="h4 text-center text-rocketseat-purple mb-4">Login - Gerencia X</h2>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                }
+                <form asp-action="Login" method="post" id="loginForm">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Senha" class="control-label">Senha</label>
+                        <input asp-for="Senha" type="password" class="form-control" />
+                        <span asp-validation-for="Senha" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-rocketseat-blue mr-2">Entrar</button>
+                        <a href="@Url.Action("Create", "Usuario")" class="btn btn-rocketseat-purple">Registrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body{
+         
+           
+            background: linear-gradient(to right,#8257e5, #fff);}
+        
+        .text-rocketseat-primary {
+            color: #8257e5;
+        }
+
+        .text-rocketseat-purple {
+            color: #6a2ea8;
+        }
+
+        .btn-rocketseat-blue {
+            background-color: #8257e5;
+            color: white;
+        }
+
+        .btn-rocketseat-purple {
+            background-color: #6a2ea8;
+            color: white;
+        }
+        /* Adicione mais estilos personalizados aqui se necessário */
+    </style>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

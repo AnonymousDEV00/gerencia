@@ -1,0 +1,32 @@
+﻿@model GerenciaVendas.Models.Usuario
+
+@{
+    bool isAtivo = Model.Estado;
+    string acao = isAtivo ? "Inativar" : "Ativar";
+    ViewData["Title"] = $"{acao} Usuário";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Tem certeza de que deseja @acao.ToLower() este usuário?</h3>
+
+<div>
+    <h4>Usuário</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <!-- Outros detalhes do usuário -->
+    </dl>
+
+    <form asp-action="@acao" method="post">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <input type="submit" value="@acao" class="btn btn-warning" /> |
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

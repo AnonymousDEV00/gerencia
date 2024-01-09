@@ -1,0 +1,27 @@
+﻿@model GerenciaVendas.Models.Cliente
+
+@{
+    ViewData["Title"] = "Detalhes do Cliente";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">@Model.Nome</h3>
+        <div class="card-text">
+            <p><strong>Data de Nascimento:</strong> @Model.DataNascimento.ToString("dd/MM/yyyy")</p>
+            <p><strong>CPF/CNPJ:</strong> @Model.CPF_CNPJ</p>
+            <p><strong>Endereço:</strong> @Model.Endereco</p>
+            <p><strong>Estado:</strong> @(Model.Estado ? "Ativo" : "Inativo")</p>
+          
+
+            <!-- Adicione mais detalhes conforme necessário -->
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="@Url.Action("Edit", "Cliente", new { id = Model.Id })" class="btn btn-success">Editar</a>
+    <a href="@Url.Action("Index", "Cliente")" class="btn btn-primary">Voltar para a Lista</a>
+</div>

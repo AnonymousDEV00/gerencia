@@ -1,0 +1,39 @@
+﻿@model IEnumerable<GerenciaVendas.Models.Produto>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Produto")" class="btn btn-primary">Adicionar Novo Produto</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade em Estoque</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var produto in Model)
+    {
+        <tr>
+            <td>@produto.Descricao</td>
+            <td>@produto.Preco.ToString("C")</td>
+            <td>@produto.QuantidadeEstoque</td>
+            <td>
+                <a href="@Url.Action("Edit", "Produto", new { id = produto.Id })" class="btn btn-success">Editar</a>
+                <a href="@Url.Action("Details", "Produto", new { id = produto.Id })" class="btn btn-info">Detalhes</a>
+                <a href="@Url.Action(produto.Estado ? "Inativar" : "Ativar", "Produto", new { id = produto.Id })" class="btn btn-warning">
+                    @(produto.Estado ? "Inativar" : "Ativar")
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+﻿@model GerenciaVendas.ViewModels.EditVendaViewModel
+
+@{
+    ViewData["Title"] = "Editar Venda";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.VendaId)
+
+    <div class="form-group">
+        <label asp-for="DataVenda" class="control-label">Data da Venda</label>
+        <input asp-for="DataVenda" type="date" class="form-control" />
+        <span asp-validation-for="DataVenda" class="text-danger"></span>
+    </div>
+
+    <!-- Renderizar itens de venda para edição -->
+    <div id="itensVenda">
+        @foreach (var item in Model.ItensVenda)
+        {
+            <div class="itemVenda">
+                @Html.HiddenFor(_ => item.ItemVendaId)
+                <div class="form-group">
+                    <label>Produto</label>
+                    <!-- Substituir com um select contendo produtos -->
+                    <select asp-for="@item.ProdutoId" class="form-control">
+                        <!-- Opções de produtos -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input asp-for="@item.Quantidade" type="number" class="form-control" />
+                </div>
+                <!-- Botão para remover item (implementar funcionalidade JavaScript se necessário) -->
+                <button type="button" class="btn btn-danger removerItem">Remover Item</button>
+            </div>
+        }
+    </div>
+
+    <button type="button" id="adicionarItem" class="btn btn-primary">Adicionar Item</button>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Salvar Alterações" class="btn btn-primary" />
+        <a href="@Url.Action("Index", "Venda")" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById('adicionarItem').addEventListener('click', function () {
+            var container = document.getElementById('itensVenda');
+            var novoItem = document.createElement('div');
+            novoItem.classList.add('itemVenda');
+            novoItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Produto</label>
+                            <select class="form-control">
+                                <!-- Opções de produtos vão aqui -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade</label>
+                            <input type="number" class="form-control" />
+                        </div>
+                        <button type="button" class="btn btn-danger removerItem">Remover Item</button>
+                    `;
+            container.appendChild(novoItem);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('removerItem')) {
+                e.target.closest('.itemVenda').remove();
+            }
+        });
+    </script>
+}

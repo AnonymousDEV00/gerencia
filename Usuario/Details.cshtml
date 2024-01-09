@@ -1,0 +1,26 @@
+﻿@model GerenciaVendas.Models.Usuario
+
+@{
+    ViewData["Title"] = "Detalhes do Usuário";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+    <h3 class="card-title">@Model.Nome</h3>
+    <div class="card-text">
+            <p><strong>Data de Cadastro:</strong> @Model.DataCadastro.ToString("dd/MM/yyyy")</p>
+            <p><strong>Email:</strong> <a href="mailto:@Model.Email">@Model.Email</a></p>
+
+          
+            <p><strong>Estado:</strong> @(Model.Estado ? "Ativo" : "Inativo")</p>
+            
+        
+    </>
+    </div>
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>

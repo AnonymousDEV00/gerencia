@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GerenciaVendas.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Usuários";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Campo de pesquisa -->
+<div class="search-container">
+    <input type="text" id="searchInput" onkeyup="searchUsers()" placeholder="Pesquisar por nome ou email...">
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr class="@(usuario.Estado ? "user-active" : "")">
+                <td>@usuario.Nome</td>
+                <td>@usuario.Email</td>
+                <td>@(usuario.Estado ? "Ativo" : "Inativo")</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Usuario", new { id = usuario.Id })" class="btn btn-success">Editar</a>
+                    <a href="@Url.Action("Details", "Usuario", new { id = usuario.Id })" class="btn btn-info">Detalhes</a>
+                    <a href="@Url.Action(usuario.Estado ? "Inativar" : "Ativar", "Usuario", new { id = usuario.Id })" class="btn btn-warning">
+                        @(usuario.Estado ? "Inativar" : "Ativar")
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Adicionar Novo Usuário</a>
+
+@section Scripts {
+    <script>
+        function searchUsers() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Coluna do Nome
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        td = tr[i].getElementsByTagName("td")[1]; // Coluna do Email
+                        if (td) {
+                            txtValue = td.textContent || td.innerText;
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+}
+<style>
+    .user-active {
+        background-color: #d4edda; /* Verde claro */
+    }
+
+    .search-container {
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    /* Adicione aqui outros estilos gerais e específicos para botões, tabela, etc. */
+
+</style>
